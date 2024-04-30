@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ldkspringbase.mapper.BoardMapper">
+
+    <select id="getAllBoards" resultType="com.ldkspringbase.entity.BoardEntity">
+        SELECT *
+        FROM Boards;
+    </select>
+
+    <select id="getBoardById" parameterType="int" resultType="com.ldkspringbase.entity.BoardEntity">
+        SELECT *
+        FROM boards
+        WHERE id = #{id}
+    </select>
+
+    <insert id="createBoard" parameterType="BoardEntity">
+        INSERT INTO boards(id, user_name, title, content, now_day, view_count, members_Number, member_Id, member_Password)
+        VALUES (#{id}, #{userName}, #{title}, #{content}, #{nowDay}, #{viewCount}, #{membersNumber}, #{memberId}, #{memberPassword});
+    </insert>
+
+    <update id="updateBoard" parameterType="BoardEntity">
+        UPDATE Boards
+        SET user_name  = #{userName},
+            title      = #{title},
+            content    = #{content},
+            now_day    = #{nowDay},
+            view_count = #{viewCount}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteBoard" parameterType="int">
+        DELETE FROM Boards
+        WHERE id = #{id}
+    </delete>
+
+    <insert id="registerMember" parameterType="com.ldkspringbase.entity.BoardEntity">
+        INSERT INTO boards (id, user_Name, title, content, now_Day, view_Count, members_Number, member_Id, member_Password)
+        VALUES (#{id}, #{userName}, #{title}, #{content}, #{nowDay}, #{viewCount}, #{membersNumber}, #{memberId}, #{memberPassword})
+    </insert>
+
+    <select id="getMemberByIdAndPassword" parameterType="java.util.Map" resultType="com.ldkspringbase.entity.BoardEntity">
+        SELECT * FROM boards
+        WHERE member_Id = #{id} AND member_Password = #{password}
+    </select>
+
+</mapper>
